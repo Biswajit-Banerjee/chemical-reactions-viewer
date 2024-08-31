@@ -1,0 +1,126 @@
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Input Pane */
+#input-pane {
+    width: 350px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-right: 1px solid #333;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Heading */
+h2 {
+    color: #76c7c0;
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Textarea */
+textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 20px;
+    background-color: #333;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Buttons */
+button {
+    background-color: #76c7c0;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #60b3b0;
+}
+
+/* Options */
+#options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Toggle */
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toggle input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+/* Range and Controls */
+#seek-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#reaction-seeker {
+    width: 100%;
+    accent-color: #76c7c0;
+}
+
+#seeker-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#play-button {
+    background-color: #ff5c5c;
+}
+
+#play-button:hover {
+    background-color: #ff3838;
+}
+
+p {
+    margin: 0;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+/* Graph Container */
+#graph-container {
+    flex-grow: 1;
+    position: relative;
+    background-color: #121212;
+    height: 100vh;
+}

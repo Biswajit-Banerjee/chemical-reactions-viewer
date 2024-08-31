@@ -4,6 +4,7 @@ let playInterval;
 function setupUIControls(updateGraph, toggleLabels, updateReactionsShown, getReactions) {
     document.getElementById('update-graph').addEventListener('click', updateGraph);
     document.getElementById('show-labels').addEventListener('change', toggleLabels);
+    document.getElementById('dynamic-node-size').addEventListener('change', updateGraph);
     document.getElementById('reaction-seeker').addEventListener('input', () => {
         updateReactionsShown(getReactions());
     });

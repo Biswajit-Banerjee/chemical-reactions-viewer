@@ -1,27 +1,21 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
+import { updateLabels } from './graphCreation.js';
 
-let scene, cssScene, camera, renderer, cssRenderer, controls;
+let scene, camera, renderer, controls;
 const graphContainer = document.getElementById('graph-container');
 
 function initScene() {
     scene = new THREE.Scene();
-    cssScene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, graphContainer.clientWidth / graphContainer.clientHeight, 0.1, 1000);
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    cssRenderer = new CSS3DRenderer();
 
     renderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
-    renderer.setClearColor(0x1a1a2e, 1);
-    cssRenderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
+    renderer.setClearColor(0xf8f8f8, 1); // Set the background color to match the off-white theme
 
-    renderer.domElement.style.position = 'absolute';
-    cssRenderer.domElement.style.position = 'absolute';
     graphContainer.appendChild(renderer.domElement);
-    graphContainer.appendChild(cssRenderer.domElement);
 
-    controls = new OrbitControls(camera, cssRenderer.domElement);
+    controls = new OrbitControls(camera, renderer.domElement);
     camera.position.set(0, 0, 50);
     controls.update();
 
@@ -39,14 +33,13 @@ function onWindowResize() {
     camera.aspect = graphContainer.clientWidth / graphContainer.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
-    cssRenderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
 }
 
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+    updateLabels();
     renderer.render(scene, camera);
-    cssRenderer.render(cssScene, camera);
 }
 
-export { initScene, onWindowResize, animate, scene, cssScene, camera };
+export { initScene, onWindowResize, animate, scene, camera };

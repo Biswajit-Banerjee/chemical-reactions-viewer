@@ -3,40 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Chemical Reaction 3D Graph</title>
+    <title>Chemical Reactions Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="input-pane">
-        <h2>Chemical Reactions</h2>
-        <textarea id="reactions-input" placeholder="Enter reactions here, one per line (e.g., 'a + b = 2c')"></textarea>
-        <button id="update-graph">Update Graph</button>
-        <div id="options">
-            <div class="toggle">
-                <input type="checkbox" id="show-labels" checked>
-                <label for="show-labels">Show Labels</label>
-            </div>
-            <div id="seek-container">
-                <input type="range" id="reaction-seeker" min="0" max="100" value="100">
-                <div id="seeker-controls">
-                    <button id="play-button">Play</button>
-                    <p>Reactions shown: <span id="reactions-count">0</span></p>
-                </div>
-            </div>
+      <h2>Chemical Reactions</h2>
+      <textarea id="reactions-input" rows="10" placeholder="Enter reactions here..."></textarea>
+      <button id="update-graph">Update Graph</button>
+      <div id="options">
+        <div class="toggle">
+          <input type="checkbox" id="show-labels" checked>
+          <label for="show-labels">Show Labels</label>
         </div>
+        <div class="toggle">
+          <input type="checkbox" id="dynamic-node-size">
+          <label for="dynamic-node-size">Dynamic Node Size</label>
+        </div>
+        <div id="seek-container">
+          <input type="range" id="reaction-seeker" min="1" max="1" value="1">
+          <div id="seeker-controls">
+            <button id="play-button">Play</button>
+            <p>Reactions shown: <span id="reactions-count">0</span></p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="graph-container">
-        <!-- The 3D graph will be rendered here -->
-    </div>
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
-                "three/examples/jsm/controls/OrbitControls": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/controls/OrbitControls.js",
-                "three/examples/jsm/renderers/CSS3DRenderer": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/jsm/renderers/CSS3DRenderer.js"
-            }
-        }
-    </script>
+    <div id="graph-container"></div>
     <script type="module" src="src/main.js"></script>
-</body>
+  </body>
 </html>

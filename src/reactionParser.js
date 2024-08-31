@@ -6,7 +6,7 @@ function parseReactions(input) {
 }
 
 function parseSingleReaction(line) {
-    const [reactants, products] = line.split('=').map(side => side.trim());
+    const [reactants, products] = line.split(/<?=>?/).map(side => side.trim());
     
     if (!reactants || !products) {
         throw new Error(`Invalid reaction format: ${line}`);
@@ -23,15 +23,19 @@ function parseSide(side) {
 }
 
 function parseItem(item) {
-    const match = item.trim().match(/^(\d*)(\w+)$/);
+    item = item.trim();
+    const match = item.match(/^(\d*\.?\d*)\s*(.+)$/);
     
     if (!match) {
         throw new Error(`Invalid item format: ${item}`);
     }
 
+    const coefficient = match[1] ? parseFloat(match[1]) : 1;
+    const element = match[2].trim();
+
     return {
-        coefficient: match[1] ? parseInt(match[1], 10) : 1,
-        element: match[2]
+        coefficient,
+        element
     };
 }
 

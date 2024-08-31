@@ -54,8 +54,8 @@ function createNodesInOrder(reactions) {
             nodes.get(reactant.element).degree++;
         });
 
-        const s1 = `S${index * 2 + 1}`;
-        const s2 = `S${index * 2 + 2}`;
+        const s1 = `Sample_node${index * 2 + 1}`;
+        const s2 = `Sample_node${index * 2 + 2}`;
         sampleNodes.push({ element: s1, position: new THREE.Vector3(), degree: 1 });
         sampleNodes.push({ element: s2, position: new THREE.Vector3(), degree: 1 });
         nodeOrder.push(s1, s2);
@@ -84,7 +84,7 @@ function positionNodesInOrder(nodeOrder, nodes, sampleNodes) {
         const y = (Math.random() - 0.5) * spacing;
         const z = (Math.random() - 0.5) * spacing;
 
-        if (element.startsWith('S')) {
+        if (element.startsWith('Sample_node')) {
             const sNode = sampleNodes.find(n => n.element === element);
             sNode.position.set(x, y, z);
         } else {
@@ -98,7 +98,7 @@ function renderNodes(nodes, sampleNodes, useDynamicSize) {
     const maxDegree = Math.max(...allNodes.map(node => node.degree));
 
     allNodes.forEach(node => {
-        const isSNode = node.element.startsWith('S');
+        const isSNode = node.element.startsWith('Sample_node');
         const material = isSNode ? sNodeMaterial : nodeMaterial;
         
         let size = 0.5;

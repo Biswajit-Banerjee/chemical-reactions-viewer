@@ -1,4 +1,4 @@
-import { initScene, animate } from './sceneSetup.js';
+import { initScene, animate, addWatercolorEffect } from './sceneSetup.js';
 import { createGraph, toggleLabels, updateReactionsShown } from './graphCreation.js';
 import { parseReactions } from './reactionParser.js';
 import { setupUIControls } from './uiControls.js';
@@ -14,11 +14,13 @@ function updateGraph() {
     updateReactionsShown(allReactions);
 }
 
+
 function init() {
     initScene();
     animate();
 
     setupUIControls(updateGraph, toggleLabels, updateReactionsShown, () => allReactions);
+    addWatercolorEffect();
 
     const initialReactions = [
         'a + b = 2c',

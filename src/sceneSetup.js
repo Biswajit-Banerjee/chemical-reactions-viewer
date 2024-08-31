@@ -11,7 +11,7 @@ function initScene() {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
     renderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
-    renderer.setClearColor(0xf8f8f8, 1); // Set the background color to match the off-white theme
+    renderer.setClearColor(0xf0e6d2, 1);
 
     graphContainer.appendChild(renderer.domElement);
 
@@ -19,10 +19,10 @@ function initScene() {
     camera.position.set(0, 0, 50);
     controls.update();
 
-    const ambientLight = new THREE.AmbientLight(0x404040);
+    const ambientLight = new THREE.AmbientLight(0x8b7d70);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    const directionalLight = new THREE.DirectionalLight(0xffd4a7, 0.5);
     directionalLight.position.set(1, 1, 1);
     scene.add(directionalLight);
 
@@ -42,4 +42,21 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-export { initScene, onWindowResize, animate, scene, camera };
+function addWatercolorEffect() {
+    const geometry = new THREE.PlaneGeometry(100, 100);
+    const loader = new THREE.TextureLoader();
+    
+    loader.load('path/to/watercolor-texture.png', (texture) => {
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            transparent: true,
+            opacity: 0.2,
+            blending: THREE.AdditiveBlending
+        });
+        const plane = new THREE.Mesh(geometry, material);
+        plane.position.z = -10;
+        scene.add(plane);
+    });
+}
+
+export { initScene, onWindowResize, animate, addWatercolorEffect, scene, camera };

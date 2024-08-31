@@ -10,10 +10,9 @@ loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json
     createGraph(currentReactions); // Recreate the graph once the font is loaded
 });
 
-const nodeGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x91D9AA });  // green
-const sNodeMaterial = new THREE.MeshBasicMaterial({ color: 0xF29979 }); // Cherry red
-const labelMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Black for labels
+const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xa7c1b5 });  // Soft green
+const sNodeMaterial = new THREE.MeshBasicMaterial({ color: 0xe6a57e }); // Soft orange
+const labelMaterial = new THREE.MeshBasicMaterial({ color: 0x4a4a4a }); // Dark gray for labels
 const nodeSize = 10
 let currentReactions = [];
 
@@ -131,7 +130,7 @@ function createEdges(reactions, nodes, sampleNodes) {
                 start: nodes.get(reactant.element).position,
                 end: s1.position,
                 coefficient: reactant.coefficient,
-                color: 0x8C686B // Pink for reactants
+                color: 0x8FA690 // reactants
             });
         });
 
@@ -140,7 +139,7 @@ function createEdges(reactions, nodes, sampleNodes) {
                 start: s2.position,
                 end: nodes.get(product.element).position,
                 coefficient: product.coefficient,
-                color: 0x8FA690 // Green for products
+                color: 0x8FA690 // products
             });
         });
     });
@@ -164,7 +163,12 @@ function createCurvedEdge(start, end, weight, color) {
     const curve = new THREE.QuadraticBezierCurve3(start, midPoint, end);
     const points = curve.getPoints(50);
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const material = new THREE.LineBasicMaterial({ color: color });
+    const material = new THREE.LineBasicMaterial({ 
+        color: color,
+        transparent: true,
+        opacity: 0.6,
+        linewidth: 2
+    });
     const curvedLine = new THREE.Line(geometry, material);
     scene.add(curvedLine);
 

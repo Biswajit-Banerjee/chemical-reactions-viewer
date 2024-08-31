@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { scene, camera } from './sceneSetup.js';
+import { scene, camera, getControls } from './sceneSetup.js';
+import { positionNodesInOrder } from "./graphLayout.js";
 
 let font;
 const loader = new FontLoader();
@@ -25,7 +26,8 @@ function createGraph(reactions) {
     scene.clear();
     
     const { nodes, sampleNodes, nodeOrder } = createNodesInOrder(reactions);
-    positionNodesInOrder(nodeOrder, nodes, sampleNodes);
+    const layoutType = document.getElementById('layout-type').value;
+    positionNodesInOrder(nodeOrder, nodes, sampleNodes, layoutType);
     
     const useDynamicSize = document.getElementById('dynamic-node-size').checked;
     renderNodes(nodes, sampleNodes, useDynamicSize);
@@ -37,6 +39,7 @@ function createGraph(reactions) {
     renderDashedLines(dashedLines);
     
     updateCameraPosition(nodeOrder, nodes, sampleNodes);
+
 }
 
 function createNodesInOrder(reactions) {
@@ -69,27 +72,6 @@ function createNodesInOrder(reactions) {
     });
 
     return { nodes, sampleNodes, nodeOrder };
-}
-
-
-function positionNodesInOrder(nodeOrder, nodes, sampleNodes) {
-    const totalNodes = nodeOrder.length;
-    const baseSpacing = 2;
-    const spacingFactor = Math.max(0.5, 1 - Math.log10(totalNodes) / 10);
-    const spacing = baseSpacing * spacingFactor;
-
-    nodeOrder.forEach((element, index) => {
-        const x = index * spacing - (totalNodes - 1) * spacing / 2;
-        const y = (Math.random() - 0.5) * spacing;
-        const z = (Math.random() - 0.5) * spacing;
-
-        if (element.startsWith('Sample_node')) {
-            const sNode = sampleNodes.find(n => n.element === element);
-            sNode.position.set(x, y, z);
-        } else {
-            nodes.get(element).position.set(x, y, z);
-        }
-    });
 }
 
 function renderNodes(nodes, sampleNodes, useDynamicSize) {
@@ -269,12 +251,21 @@ function updateCameraPosition(nodeOrder, nodes, sampleNodes) {
     const fov = camera.fov * (Math.PI / 180);
     let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
 
-    // Adjust for some padding
+    // Adjust for some padding and to view from an angle
     cameraZ *= 1.5;
+    const cameraX = cameraZ * 0.7;
+    const cameraY = cameraZ * 0.7;
 
-    camera.position.set(center.x, center.y, center.z + cameraZ);
+    camera.position.set(center.x + cameraX, center.y + cameraY, center.z + cameraZ);
     camera.lookAt(center);
     camera.updateProjectionMatrix();
+
+    // Update the controls target if controls are available
+    const controls = getControls();
+    if (controls) {
+        controls.target.copy(center);
+        controls.update();
+    }
 }
 
 export { createGraph, toggleLabels, updateReactionsShown, updateLabels };

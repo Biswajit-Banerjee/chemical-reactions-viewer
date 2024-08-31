@@ -59,4 +59,8 @@ function addWatercolorEffect() {
     });
 }
 
-export { initScene, onWindowResize, animate, addWatercolorEffect, scene, camera };
+function getControls() {
+    return controls;
+}
+
+export { initScene, onWindowResize, animate, addWatercolorEffect, scene, camera, getControls };

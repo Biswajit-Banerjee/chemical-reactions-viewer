@@ -23,9 +23,12 @@ function init() {
     addWatercolorEffect();
 
     const initialReactions = [
-        'a + b = 2c',
-        '2d + e = b',
-        '3d + 5f = a'
+        'C00141 + C00001 <=> C04272',
+        'C00183 + C00026 <=> C00141 + C00025',
+        'C04272 + C00006 <=> C04181 + C00005 + C00080',
+        'C06007 + C00006 <=> C14463 + C00005 + C00080',
+        'C00671 + C00001 <=> C06007',
+        'C00407 + C00026 <=> C00671 + C00025'
     ];
     document.getElementById('reactions-input').value = initialReactions.join('\n');
     updateGraph();

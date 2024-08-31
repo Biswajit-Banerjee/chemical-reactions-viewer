@@ -146,3 +146,24 @@ p {
     height: 100vh;
     overflow: hidden;
 }
+
+.select-wrapper {
+    margin-bottom: 15px;
+  }
+  
+  .select-wrapper label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4a4a4a;
+  }
+  
+  #layout-type {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #d3c7a6;
+    border-radius: 4px;
+    background-color: #fdfaf0;
+    color: #4a4a4a;
+    font-family: 'Georgia', serif;
+  }

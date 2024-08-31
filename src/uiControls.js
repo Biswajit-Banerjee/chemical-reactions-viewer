@@ -5,6 +5,7 @@ function setupUIControls(updateGraph, toggleLabels, updateReactionsShown, getRea
     document.getElementById('update-graph').addEventListener('click', updateGraph);
     document.getElementById('show-labels').addEventListener('change', toggleLabels);
     document.getElementById('dynamic-node-size').addEventListener('change', updateGraph);
+    document.getElementById('layout-type').addEventListener('change', updateGraph);
     document.getElementById('reaction-seeker').addEventListener('input', () => {
         updateReactionsShown(getReactions());
     });

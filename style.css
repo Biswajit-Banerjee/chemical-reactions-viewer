@@ -11,7 +11,7 @@ body {
 }
 
 #input-pane {
-    width: 350px;
+    width: 300px;
     padding: 20px;
     background-color: #fff9e6;
     display: flex;
@@ -19,8 +19,9 @@ body {
     justify-content: flex-start;
     border-right: 1px solid #d3c7a6;
     overflow-y: auto;
-    height: 100vh;
-    box-sizing: border-box;
+    overflow-x: auto;
+    height: 160vh;
+    /* box-sizing: border-box; */
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { SVGRenderer } from 'three/examples/jsm/renderers/SVGRenderer';
 import { updateLabels } from './graphCreation.js';
 
-let scene, camera, renderer, controls;
+let scene, camera, renderer, controls, svgRenderer;
 const graphContainer = document.getElementById('graph-container');
 
 function initScene() {
@@ -27,12 +28,17 @@ function initScene() {
     scene.add(directionalLight);
 
     window.addEventListener('resize', onWindowResize, false);
+
+    // Initialize SVG renderer
+    svgRenderer = new SVGRenderer();
+    svgRenderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
 }
 
 function onWindowResize() {
     camera.aspect = graphContainer.clientWidth / graphContainer.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
+    svgRenderer.setSize(graphContainer.clientWidth, graphContainer.clientHeight);
 }
 
 function animate() {
@@ -63,4 +69,20 @@ function getControls() {
     return controls;
 }
 
-export { initScene, onWindowResize, animate, addWatercolorEffect, scene, camera, getControls };
+function downloadSVG() {
+    svgRenderer.render(scene, camera);
+    const svgData = svgRenderer.domElement.outerHTML;
+    const blob = new Blob([svgData], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'chemical_reactions_graph.svg';
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+function resetRotation() {
+    controls.reset();
+}
+
+export { initScene, onWindowResize, animate, addWatercolorEffect, scene, camera, getControls, downloadSVG, resetRotation };

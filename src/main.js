@@ -1,4 +1,4 @@
-import { initScene, animate, addWatercolorEffect } from './sceneSetup.js';
+import { initScene, animate, addWatercolorEffect, downloadSVG, resetRotation } from './sceneSetup.js';
 import { createGraph, toggleLabels, updateReactionsShown } from './graphCreation.js';
 import { parseReactions } from './reactionParser.js';
 import { setupUIControls } from './uiControls.js';
@@ -14,13 +14,16 @@ function updateGraph() {
     updateReactionsShown(allReactions);
 }
 
-
 function init() {
     initScene();
     animate();
 
     setupUIControls(updateGraph, toggleLabels, updateReactionsShown, () => allReactions);
     addWatercolorEffect();
+
+    // Set up new buttons
+    document.getElementById('download-svg').addEventListener('click', downloadSVG);
+    document.getElementById('reset-rotation').addEventListener('click', updateGraph);
 
     const initialReactions = [
         'C00141 + C00001 <=> C04272',

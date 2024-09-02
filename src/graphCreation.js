@@ -14,7 +14,7 @@ loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json
 const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xa7c1b5 });  // Soft green
 const sNodeMaterial = new THREE.MeshBasicMaterial({ color: 0xe6a57e }); // Soft orange
 const labelMaterial = new THREE.MeshBasicMaterial({ color: 0x4a4a4a }); // Dark gray for labels
-const nodeSize = 10
+const nodeSize = 32
 let currentReactions = [];
 
 function createGraph(reactions) {

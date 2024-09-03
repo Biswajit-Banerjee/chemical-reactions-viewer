@@ -3,78 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemical Reactions Visualizer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <title>Chemical Reactions Visualization</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="input-pane">
-      <h2>Chemical Reactions</h2>
-      <textarea
-        id="reactions-input"
-        rows="10"
-        placeholder="Enter reactions here..."
-      ></textarea>
-      <button id="update-graph">Update Graph</button>
-
-      <div id="options">
-        <div class="toggle">
-          <input type="checkbox" id="show-labels" checked />
-          <label for="show-labels">Show Labels</label>
+        <h2>Chemical Reactions</h2>
+        <textarea id="reactions-input" rows="10" placeholder="Enter chemical reactions..."></textarea>
+        <button id="update-graph">Update Graph</button>
+        
+        <div id="options">
+            <div class="toggle">
+                <input type="checkbox" id="show-labels">
+                <label for="show-labels">Show Labels</label>
+            </div>
+            <div class="toggle">
+                <input type="checkbox" id="dynamic-node-size">
+                <label for="dynamic-node-size">Dynamic Node Size</label>
+            </div>
+            <div class="select-wrapper">
+                <label for="layout-type">Layout Type:</label>
+                <select id="layout-type">
+                    <option value="individual">Individual</option>
+                    <option value="spiral">Reaction Spiral</option>
+                    <option value="force-directed">Force-Directed</option>
+                    <option value="2d-grid">2D Grid</option>
+                </select>
+            </div>
         </div>
-        <div class="toggle">
-          <input type="checkbox" id="dynamic-node-size" />
-          <label for="dynamic-node-size">Dynamic Node Size</label>
-        </div>
-        <div class="select-wrapper">
-          <label for="layout-type">Layout Type:</label>
-          <select id="layout-type">
-            <option value="individual">Individual</option>
-            <option value="spiral">Reaction Spiral</option>
-            <option value="force-directed">Force-Directed</option>
-            <option value="2d-grid">2D Grid</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="seek-container">
-        <div id="seeker-controls">
-          <button id="play-button">Play</button>
-          <input type="range" id="reaction-seeker" min="1" max="1" value="1" />
-        </div>
-        <p>Reactions shown: <span id="reactions-count">0</span></p>
-      </div>
     </div>
 
     <div id="graph-container">
       <div id="graph-controls">
-        <button id="download-svg" class="icon-button" title="Download SVG">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-          </svg>
-        </button>
-        <button id="reset-rotation" class="icon-button" title="Reset Rotation">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path
-              d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
-            />
-          </svg>
-        </button>
+          <button id="download-svg" class="icon-button" title="Download SVG">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+              </svg>
+          </button>
+          <button id="reset-rotation" class="icon-button" title="Reset Rotation">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
+              </svg>
+          </button>
       </div>
+      <div id="timeline-controls">
+        <button id="step-backward" class="icon-button" title="Step Backward">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"></path>
+            </svg>
+        </button>
+        <button id="play-pause" class="icon-button" title="Play/Pause">
+            <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+            <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+            </svg>
+            <svg id="replay-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path>
+            </svg>
+        </button>
+        <button id="step-forward" class="icon-button" title="Step Forward">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path>
+            </svg>
+        </button>
+        <div class="seekbar-container">
+            <input type="range" id="reaction-seeker" min="0" max="100" value="0">
+            <span id="reactions-count">0</span>
+        </div>
     </div>
 
     <script type="module" src="src/main.js"></script>
-  </body>
+</body>
 </html>
